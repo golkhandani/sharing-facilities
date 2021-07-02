@@ -1,0 +1,72 @@
+<div class="background">
+    <div class="layer"></div>
+</div>
+<section class="home-page__main-section">
+
+
+    <div class="home-page__left-section">
+        <div class="home-page__title">
+            Share Your Home Facility Easy!
+        </div>
+        <div class="home-page__description">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio rerum sint, ipsam maxime quasi expedita
+            provident molestias asperiores illum reiciendis iste tenetur? Expedita harum voluptate tempore! Veniam
+            temporibus vero tempore.
+        </div>
+        <div class="home-page__room-name">
+            <input type="text" name="room-name" id="room-name" placeholder="Enter your room unique name!">
+        </div>
+        <div class="home-page__actions">
+            <a id="create-room" class="button" href="#">Create Your Room</a>
+            <a id="access-room" class="button" href="#">Access Your Room</a>
+        </div>
+    </div>
+
+    <div class="home-page__right-section">
+        <div class="home-page__hero-image">
+            <div id="animation"></div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    const element = document.getElementById("animation")
+    lottie.loadAnimation({
+        container: element, // the dom element that will contain the animation
+        renderer: 'svg',
+        loop: false,
+        autoplay: true,
+        speed: 2.4,
+        path: '/images/home-animation.json' // the path to the animation json
+    });
+
+
+
+    const createRoomBtn = document.getElementById("create-room");
+
+    createRoomBtn.addEventListener('click', async (e) => {
+        const roomName = document.getElementById("room-name").value;
+        e.preventDefault();
+        console.log(roomName);
+        const response = await fetch('/', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({ "room": roomName })
+        });
+        const responseJson = await response.json(); // parses JSON response into native JavaScript objects
+        if (responseJson.data) {
+            window.location.href = "/rooms/" + roomName;
+        }
+    })
+
+
+</script>

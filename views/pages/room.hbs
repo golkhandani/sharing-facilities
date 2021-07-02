@@ -1,0 +1,17 @@
+<div class="background">
+    <div class="layer"></div>
+</div>
+
+<Section class="room-page__main-section">
+    <h1 class="room-page__welcome-message">Welcome to the {{data.name}} room!</h1>
+    <div class="room-page__facility-actions">
+        <div class="room-page__facility-list">
+            <ul>
+                {{#each data.facilities}}
+                <li><a class="button" href="#">{{this.name}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="room-page__facility-reservation"></div>
+    </div>
+</Section>
