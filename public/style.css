@@ -376,6 +376,7 @@ input{box-sizing:border-box}
     --accent-hover: #07206e;
     --blue: #1b3c56a9;
     --white: #ffffff;
+    --disable-link: rgb(117, 117, 117)
 }
 
 html, body {
@@ -456,7 +457,7 @@ html, body {
     width: 70%;
     margin-bottom: 20pt;
 }
-.home-page__room-name > input {
+.text-input {
     border-radius: 10pt;
     height: 28pt;
     width: 100%;
@@ -518,7 +519,7 @@ html, body {
     flex-direction: row;
     width: calc(100vw - 0pt);
     background-color: transparent;
-    height: calc(100vh - 100pt - 40px);
+    height: calc(100vh - 80pt - 60px);
 }
 
 .room-page__facility-list {
@@ -528,4 +529,89 @@ html, body {
 
 .room-page__facility-list li {
     margin-bottom: 10pt;
+}
+
+.form-label {
+    color: var(--white);
+    font-size: medium;
+    font-weight: bold;
+    margin-bottom: 10pt;
+}
+
+.room-page__facility-reservation {
+    width: 40%;
+    height: calc(100vh - 80pt - 60px);
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.room-page__facility-reservation form {
+    width: 70%;
+}
+.room-page__facility-reservation form select,
+.room-page__facility-reservation form input {
+    width: 100%;
+}
+.date-picker {
+    border-radius: 10pt;
+    height: 28pt;
+    background-color: var(--accent);
+    color: var(--white);
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: small;
+    padding: 0 10pt;
+}
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.select-time {
+    border-radius: 10pt;
+    height: 28pt;
+    color: var(--white);
+    background-color: var(--accent);
+    padding: 0 10pt;
+    font-family: 'Nunito', sans-serif;
+    font-size: small;
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    text-indent: 5px;
+}
+
+option {
+    margin: 10px !important;
+    font-size: large;
+    padding: 10pt;
+}
+
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 20pt;
+}
+
+.disabled-link {
+    pointer-events: none;
+    background-color: var(--disable-link);
+}
+
+.selected-link:hover,
+.selected-link {
+    pointer-events: none;
+    background-color: green;
+}
+
+.facility-reservation-card {
+    display: flex;
+    flex-direction: column;
+    color: var(--white);
+    margin-bottom: 10pt;
+    margin-left: 10pt;
 }

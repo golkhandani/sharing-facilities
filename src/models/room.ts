@@ -2,6 +2,10 @@ import { ObjectId } from "mongodb";
 
 export type WithOutId<T> = Omit<T, '_id'>
 
+
+
+
+
 export class Facility {
     _id: ObjectId;
 
@@ -31,4 +35,25 @@ export class Room {
         return Object.assign(this, data);
     }
 
+}
+
+
+export class Reservation {
+    _id: ObjectId;
+
+    room: Room;
+
+    facility: Facility;
+
+    user: string;
+
+    duration: string;
+
+    startDate: Date;
+
+    reservedAt: Date;
+
+    constructor(data: WithOutId<Reservation>) {
+        return Object.assign(this, data);
+    }
 }

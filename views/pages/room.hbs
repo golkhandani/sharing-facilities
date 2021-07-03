@@ -8,10 +8,192 @@
         <div class="room-page__facility-list">
             <ul>
                 {{#each data.facilities}}
-                <li><a class="button" href="#">{{this.name}}</a></li>
+                <li><a class="button facility-button" id={{this._id}} href="">{{this.name}}</a></li>
                 {{/each}}
             </ul>
         </div>
-        <div class="room-page__facility-reservation"></div>
+        <div class="room-page__facility-reservation">
+            <form action="" method="post">
+                <div class="input-box">
+                    <label class="form-label" for="user">Who are you:</label>
+                    <input class="text-input" type="text" name="user" id="user-input"
+                        placeholder="Name of person who want to reserve!">
+                </div>
+
+                <div class="input-box">
+                    <label class="form-label" for="date">Choose Your Date:</label>
+                    <input class="date-picker" type="date" name="date" id="date-input" min={new
+                        Date().toISOString().split('T')[0]}>
+                </div>
+                <div class="input-box">
+                    <label class="form-label" for="time">Choose Your Time:</label>
+                    <select class="select-time" name="time" id="time-input">
+                        <option value="01:00">01:00 AM</option>
+                        <option value="02:00">02:00 AM</option>
+                        <option value="03:00">03:00 AM</option>
+                        <option value="04:00">04:00 AM</option>
+                        <option value="05:00">05:00 AM</option>
+                        <option value="06:00">06:00 AM</option>
+                        <option value="07:00">07:00 AM</option>
+                        <option value="08:00">08:00 AM</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 AM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="17:00">05:00 PM</option>
+                        <option value="18:00">06:00 PM</option>
+                        <option value="19:00">07:00 PM</option>
+                        <option value="20:00">08:00 PM</option>
+                        <option value="21:00">09:00 PM</option>
+                        <option value="22:00">10:00 PM</option>
+                        <option value="23:00">11:00 PM</option>
+                        <option value="00:00">12:00 PM</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <a class="button" style="width: 100%; margin-top:40pt" href="#" id="form-submit">Reserve</a>
+                </div>
+            </form>
+        </div>
+        <div class="room-page__facility-reservation-list">
+            <ul id="facility-reservation-list">
+
+            </ul>
+        </div>
     </div>
 </Section>
+
+
+<script>
+
+    let facility = null;
+    const path = window.location.pathname;
+    const dateInput = document.getElementById("date-input");
+    const timeInput = document.getElementById("time-input");
+    const submit = document.getElementById("form-submit");
+    const userInput = document.getElementById("user-input");
+    const reservationList = document.getElementById("facility-reservation-list");
+
+    dateInput.valueAsDate = new Date();
+    const createDatetime = () => {
+        const date = dateInput.value;
+        const time = timeInput.value;
+        const datetime = new Date(`${date}T${time}:00`);
+        return datetime;
+    }
+    submit.addEventListener("click", async (e) => {
+        e.preventDefault();
+        // get date and time and create a date object;
+        const datetime = createDatetime();
+        const user = userInput.value;
+        if (!user || user == "") {
+            return window.alert("Add a name as reservation user!");
+        }
+        const response = await fetch(path + `/reservation`, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify({ facility: facility, datetime: datetime, user: user })
+        });
+        const responseJson = await response.json();
+        if (responseJson.data) {
+            const item = responseJson.data;
+            reservationList.innerHTML +=
+                `<li class="facility-reservation-card">
+                    <span>Reserved By: ${item.user}</span>
+                    <span>Start At: ${new Date(item.startDate)}</span>
+                    <span>Duration: ${item.duration}</span>
+                    <span>Reserved At: ${new Date(item.reservedAt)}</span>
+                </li>`;
+            window.alert("Successfully Reserved");
+        } else {
+            window.alert("Can't book the facility! Change your date and time!")
+        }
+    });
+
+
+
+    const updateReservedList = async () => {
+        const baseUrl = "/rooms/"
+
+        const response = await fetch(path + `/reservation?facility=${facility}&date=${dateInput.value}&time=${timeInput.value}`, {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+
+        });
+        const responseJson = await response.json();
+        if (responseJson.data) {
+            const list = responseJson.data;
+            reservationList.innerHTML = '';
+            list.forEach((item, index) => {
+                reservationList.innerHTML +=
+                    `<li class="facility-reservation-card">
+                        <span>Reserved By: ${item.user}</span>
+                        <span>Start At: ${new Date(item.startDate)}</span>
+                        <span>Duration: ${item.duration}</span>
+                        <span>Reserved At: ${new Date(item.reservedAt)}</span>
+                    </li>`;
+            })
+
+        } else {
+            window.alert("Can't book the facility! Change your date and time!")
+        }
+
+
+
+    }
+
+    dateInput.addEventListener("change", (e) => {
+        updateReservedList();
+    });
+
+    timeInput.addEventListener("change", (e) => {
+        updateReservedList();
+    })
+
+    const facilities = Array.from(document.getElementsByClassName("facility-button"))
+    facilities.forEach((item, i) => {
+        if (i == 0) {
+            item.classList.add("selected-link");
+            facility = item.getAttribute("id");
+            updateReservedList()
+        }
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            facilities.forEach(item => item.classList.remove("selected-link"));
+            item.classList.add("selected-link");
+            facility = item.getAttribute("id");
+            updateReservedList();
+        });
+
+    })
+
+
+
+
+
+
+
+
+
+
+</script>

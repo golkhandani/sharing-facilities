@@ -14,7 +14,8 @@
             temporibus vero tempore.
         </div>
         <div class="home-page__room-name">
-            <input type="text" name="room-name" id="room-name" placeholder="Enter your room unique name!">
+            <input class="text-input" type="text" name="room-name" id="room-name"
+                placeholder="Enter your room unique name!">
         </div>
         <div class="home-page__actions">
             <a id="create-room" class="button" href="#">Create Your Room</a>
@@ -48,7 +49,6 @@
     createRoomBtn.addEventListener('click', async (e) => {
         const roomName = document.getElementById("room-name").value;
         e.preventDefault();
-        console.log(roomName);
         const response = await fetch('/', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
