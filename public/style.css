@@ -703,6 +703,7 @@ option {
     }
     .button {
         width: 100%;
+        height: 26pt;
     }
     .room-page__facility-reservation {
         width: 100%;
