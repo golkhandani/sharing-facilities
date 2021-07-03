@@ -654,9 +654,11 @@ option {
         padding: 0;
     }
     .home-page__title {
+        font-size: 20px;
         line-height: 2.2rem;
-        font-size: xx-large;
+        /* font-size: xx-large; */
         color: var(--white);
+        text-align: center;
         font-weight: bold;
         margin-bottom: 40pt;
     }
@@ -681,6 +683,7 @@ option {
         max-width: 100%;
         margin-bottom: 20pt;
         text-align: justify;
+        font-size: 14px;
     }
     #create-room {
         margin-right: 10px;
