@@ -481,7 +481,8 @@ html, body {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    border-radius: 10pt;    
+    border-radius: 10pt;  
+    border: 1px solid #ffffff;  
 }
 .button:hover {
     background-color: var(--accent-hover);
@@ -615,3 +616,105 @@ option {
     margin-bottom: 10pt;
     margin-left: 10pt;
 }
+
+
+@media (max-width: 480px) {
+    .background {
+    
+        background-image: url('/images/home-bg.jpg');
+        background-repeat: no-repeat;
+        background-size:cover;
+        position: fixed;
+        height: 100%;
+        width: 100vw;
+        z-index: -1;
+    
+    }
+    .layer {
+        background-color: var(--blue);
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100vw;
+        z-index: -1;
+    }
+    
+    .home-page__main-section {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: space-around;
+        padding: 10pt;
+        height: calc(100vh - 20pt);
+        
+    }
+    .home-page__right-section {
+        width: 100%;
+        padding: 0;
+    }
+    .home-page__title {
+        line-height: 2.2rem;
+        font-size: xx-large;
+        color: var(--white);
+        font-weight: bold;
+        margin-bottom: 40pt;
+    }
+    .home-page__left-section {
+        max-width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .home-page__actions {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .home-page__room-name {
+        width: 100%;
+        margin-bottom: 20pt;
+    }
+    .home-page__description {
+        color: white;
+        max-width: 100%;
+        margin-bottom: 20pt;
+        text-align: justify;
+    }
+    #create-room {
+        margin-right: 10px;
+    }
+
+    .room-page__welcome-message {
+        font-size: 20px;
+    }
+
+    .room-page__facility-actions {
+        display: flex;
+        flex-direction: column;
+        width: calc(100vw - 0pt);
+        background-color: transparent;
+        height: calc(100vh - 80pt - 60px);
+        border-bottom: #ffffff 1px;
+    }
+    .room-page__facility-reservation form {
+        width: 100%;
+    }
+    .button {
+        width: 100%;
+    }
+    .room-page__facility-reservation {
+        width: 100%;
+        margin: 0 15pt;
+    }
+
+    .input-box {
+        width: calc(100% - 30pt);
+       
+    }
+    .form-label {
+        width: 100%;
+       
+    }
+  }
